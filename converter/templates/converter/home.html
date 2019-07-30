@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Converter</title>
+</head>
+<body>
+
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button>
+                Get Link For Download
+            </button>
+        </form>
+
+    </div>
+
+</body>
+</html>
