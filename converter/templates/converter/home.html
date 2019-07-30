@@ -1,20 +1,28 @@
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>YouTube Converter</title>
+    <title>Youtube Downloader</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <body>
 
     <div class="container">
-        <form method="post">
+        <h1 class="text-success">Convert any video from <span class="text-danger">YOUTUBE.COM</span> to mp3 format</h1>
+        <form method="post" class="form">
             {% csrf_token %}
-            {{ form }}
-            <button>
-                Get Link For Download
-            </button>
-        </form>
+            {{ form|crispy }}
 
+            <!--- ERROR MESSAGE --->
+            {% if message.success %}
+                <h4 class="text-success">{{ message }}</h4>
+            {% elif message.error %}
+                <h4 class="text-danger">{{ message }}</h4>
+            {% endif %}
+
+            <button class="btn btn-info">Send Link to Email</button>
+        </form>
     </div>
 
 </body>

@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from .forms import YoutubeFileForm
+from .services import converter
+from youtube_dl.utils import DownloadError
 
 
 def home_view(request):
@@ -9,6 +12,14 @@ def home_view(request):
         if form.is_valid():
             link = form.cleaned_data.get('link')
             email = form.cleaned_data.get('email')
-            return render(request, 'converter/home.html', {'form': form})
+            # pass video_link to converter
+            try:
+                video_link = converter(link)
+                messages.success(request, 'We sent download link to your email, please check it.')
+                return render(request, 'converter/home.html', {'form': form})
+            except DownloadError:
+                messages.error(request, 'Unsupported URL, please put valid YOUTUBE url')
+                return render(request, 'converter/home.html', {'form': form})
+
     form = YoutubeFileForm(request.GET)
     return render(request, 'converter/home.html', {'form': form})

@@ -1,4 +1,6 @@
 Django==2.2.3
+django-crispy-forms==1.7.2
 python-decouple==3.1
 pytz==2019.1
 sqlparse==0.3.0
+youtube-dl==2019.7.30
