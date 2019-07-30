@@ -1,3 +1,8 @@
 from django.contrib import admin
+from .models import YoutubeFile
 
-# Register your models here.
+
+@admin.register(YoutubeFile)
+class YoutubeFileAdmin(admin.ModelAdmin):
+    list_display = ('link', 'email')
+
