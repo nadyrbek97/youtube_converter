@@ -90,4 +90,8 @@ install a message broker.
 **In which data types Data is passed in workers?**
 ```
 
+Ru
+Worker celery должны быть перезапущены каждый раз,
+когда производится изменение кода, связанного с задачей celery.
+
 ```
