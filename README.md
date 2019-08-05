@@ -10,11 +10,32 @@ Project works in asynchronous manner using celery and redis.
 $ git clone https://github.com/nadyrbek97/youtube_converter
 $ virtualenv venv -p python3
 $ source venv/bin/activate
-$ cd converter
+$ cd youtube_converter
 $ pip install -r requirements.txt
 
 ```
+### Before running 
 
+1 Create .env file in project directory with:
+```
+      SECRET_KEY=your_secret_key
+      EMAIL_HOST_USER=your_email_username
+      EMAIL_HOST_PASSWORD=your_email_password
+```
+2 Migrate migration files 
+```
+    python manage.py migrate
+```
+
+3. Create super user
+```
+    python manage.py createsuperuser
+```
+
+4. Run celery in another command line 
+```
+    celery worker -A youtube_converter 
+```
 
 ## Theoretical Part 
 ### Redis 
@@ -30,8 +51,6 @@ manipulation of data structures lends itself to solving problems that are
 difficult or perform poorly when implemented with traditional relational
 databases.
 ```
-
-
 
 
 ### Celery 
@@ -58,8 +77,35 @@ asynchronously. Another example is sending emails to users. If your
 site sends email notifications from a view, the SMTP connection
 might fail or slow down the response. Launching asynchronous
 tasks is essential to avoid blocking the code execution.
-    Ru
-Не используйте базу данных в качестве broker/backend
+```
+
+**How does Celery work?**
+``` 
+We need to register our task for workers.
+Via Redis this worker will be connected with task and execute it.
+```
+
+**How does Celery work with Redis?**
+```
+For celery we need message broker, for this purpose we can use Redis.
+Redis connects workers with task, using key & value, worker & and registered task
+```
+
+**What are workers in celery?**
+```
+Workers are kinda functions that execute registered task in asynchronic way.
+```
+**In workers, in which data types Data is passed?**
+```
+Data passed in Dictionary (key&value)
+```
+
+**Some advices in Russian**
+```
+1 Worker celery должны быть перезапущены каждый раз,
+когда производится изменение кода, связанного с задачей celery.
+
+2 Не используйте базу данных в качестве broker/backend
 Брокер отвечает за передачу сообщений (задач) между так называемыми
 исполнителями (workers). Проблема использования базы данных заключается
 в её ограничениях - она просто не предназначена для этого.
@@ -68,30 +114,4 @@ tasks is essential to avoid blocking the code execution.
 Всё это приведёт к бутылочному горлышку в виде затыка на I/O, потере задач,
 а возможно и неоднократному их исполнению (два воркера могут получить одну и ту же задачу на исполнение).
 Отличным production-ready решением является использование RabbitMQ или Redis для этой роли.
-
-```
-
-**How does Celery work?**
-``` 
-Celery works as a queue
-```
-
-**How does Celery work with Redis?**
-```
-
-```
-
-**What are workers in celery?**
-```
-Celery workers, which process tasks as they receive them. Let's
-install a message broker.
-```
-
-**In which data types Data is passed in workers?**
-```
-
-Ru
-Worker celery должны быть перезапущены каждый раз,
-когда производится изменение кода, связанного с задачей celery.
-
 ```
