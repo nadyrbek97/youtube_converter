@@ -13,14 +13,6 @@
         <form method="post" class="form">
             {% csrf_token %}
             {{ form|crispy }}
-
-            <!--- ERROR MESSAGE --->
-            {% if message.success %}
-                <h4 class="text-success">{{ message }}</h4>
-            {% elif message.error %}
-                <h4 class="text-danger">{{ message }}</h4>
-            {% endif %}
-
             <button class="btn btn-info">Send Link to Email</button>
         </form>
     </div>
