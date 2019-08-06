@@ -19,8 +19,8 @@ $ pip install -r requirements.txt
 1 Create .env file in project directory with:
 ```
       SECRET_KEY=your_secret_key
-      EMAIL_HOST_USER=your_email_username
-      EMAIL_HOST_PASSWORD=your_email_password
+      EMAIL_ACCOUNT=your_email_username
+      EMAIL_PASSWORD=your_email_password
 ```
 2 Migrate migration files 
 ```
