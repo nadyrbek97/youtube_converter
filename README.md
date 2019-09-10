@@ -97,7 +97,7 @@ Workers are kinda functions that execute registered task in asynchronic way.
 ```
 **In workers, in which data types Data is passed?**
 ```
-Data passed in Dictionary (key&value)
+Data passed in string
 ```
 
 **Some advices in Russian**
